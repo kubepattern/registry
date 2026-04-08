@@ -23,6 +23,10 @@ spec:
       kind: NavMenuItem
       apiVersion: widgets.templates.krateo.io/v1beta1
       plural: navmenuitems
+    - id: panel
+      kind: Panel
+      apiVersion: widgets.templates.krateo.io/v1beta1
+      plural: panels
 
   relationships:
     matchNone:
@@ -35,7 +39,15 @@ spec:
           - targetPath: "metadata.namespace"
             dependencyPath: "spec.resourcesRefs.items[*].namespace"
             operator: EQUALS
-
+      - with: panel
+        type: custom
+        criteria:
+          - targetPath: "metadata.name"
+            dependencyPath: "spec.resourcesRefs.items[*].name"
+            operator: EQUALS
+          - targetPath: "metadata.namespace"
+            dependencyPath: "spec.resourcesRefs.items[*].namespace"
+            operator: EQUALS
 ---
 apiVersion: kubepattern.dev/v1
 kind: Pattern
@@ -100,3 +112,102 @@ spec:
           - targetPath: "metadata.namespace"
             dependencyPath: "spec.resourcesRefs.items[*].namespace"
             operator: EQUALS
+
+---
+
+apiVersion: kubepattern.dev/v1
+kind: Pattern
+metadata:
+  name: panel-not-referenced
+spec:
+  displayName: "Pannello Krateo non Referenziato"
+  category: "Architecture"
+  severity: MEDIUM
+  message: "Il Panel {{target.metadata.name}} nel namespace {{target.metadata.namespace}} non è incluso in alcun layout (Row, Column, TabList o Panel)."
+  reference: "https://docs.krateo.io/widgets/panel"
+  
+  target:
+    kind: Panel
+    apiVersion: widgets.templates.krateo.io/v1beta1
+    plural: panels
+    filters:
+      matchNone:
+        - path: "metadata.namespace"
+          operator: EQUALS
+          values:
+            - krateo-system
+
+  dependencies:
+    - id: parent-panel
+      kind: Panel
+      apiVersion: widgets.templates.krateo.io/v1beta1
+      plural: panels
+    - id: column
+      kind: Column
+      apiVersion: widgets.templates.krateo.io/v1beta1
+      plural: columns
+    - id: row
+      kind: Row
+      apiVersion: widgets.templates.krateo.io/v1beta1
+      plural: rows
+    - id: tablist
+      kind: TabList
+      apiVersion: widgets.templates.krateo.io/v1beta1
+      plural: tablists
+    - id: page
+      kind: Page
+      apiVersion: widgets.templates.krateo.io/v1beta1
+      plural: pages
+    - id: datagrid
+      kind: DataGrid
+      apiVersion: widgets.templates.krateo.io/v1beta1
+      plural: datagrids
+    - id: portalblueprintpage
+      kind: PortalBlueprintPage
+      apiVersion: composition.krateo.io/v1-0-10
+      plural: portalblueprintpages
+
+  relationships:
+    matchNone:
+      - with: parent-panel
+        type: custom
+        criteria:
+          - targetPath: "metadata.name"
+            dependencyPath: "spec.resourcesRefs.items[*].name"
+            operator: EQUALS
+      - with: column
+        type: custom
+        criteria:
+          - targetPath: "metadata.name"
+            dependencyPath: "spec.resourcesRefs.items[*].name"
+            operator: EQUALS
+      - with: row
+        type: custom
+        criteria:
+          - targetPath: "metadata.name"
+            dependencyPath: "spec.resourcesRefs.items[*].name"
+            operator: EQUALS
+      - with: tablist
+        type: custom
+        criteria:
+          - targetPath: "metadata.name"
+            dependencyPath: "spec.resourcesRefs.items[*].name"
+            operator: EQUALS
+      - with: page
+        type: custom
+        criteria:
+        - targetPath: "metadata.name"
+          dependencyPath: "spec.resourcesRefs.items[*].name"
+          operator: EQUALS
+      - with: datagrid
+        type: custom
+        criteria:
+        - targetPath: "metadata.name"
+          dependencyPath: "spec.resourcesRefs.items[*].name"
+          operator: EQUALS
+      - with: portalblueprintpage
+        type: custom
+        criteria:
+        - targetPath: "metadata.name"
+          dependencyPath: "status.managed[*].name"
+          operator: EQUALS
