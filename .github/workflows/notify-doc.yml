@@ -1,0 +1,25 @@
+name: Rebuild the KubePattern site
+
+# The Smell Map of kubepattern.dev is built from the Patterns of this registry.
+# Every change to them asks kubepattern/doc to rebuild and redeploy the site.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '*/patterns/**'
+      - '*/platform.yaml'
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch registry-updated to kubepattern/doc
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          # Fine-grained token with Contents: read and write on kubepattern/doc.
+          token: ${{ secrets.DOC_DISPATCH_TOKEN }}
+          repository: kubepattern/doc
+          event-type: registry-updated
+          client-payload: '{"sha": "${{ github.sha }}"}'
