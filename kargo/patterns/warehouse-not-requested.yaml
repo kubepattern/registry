@@ -4,6 +4,9 @@ metadata:
   name: kargo-warehouse-not-requested
   labels:
     kubepattern.dev/platform: kargo
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A Warehouse that keeps discovering artifacts that no Stage requests."
 spec:
   displayName: Warehouse Not Requested by Any Stage
   category: Cost

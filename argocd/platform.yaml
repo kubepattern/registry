@@ -1,0 +1,5 @@
+# Shown by the Smell Map of kubepattern.dev.
+name: "Argo CD"
+role: "GitOps"
+# Version the patterns were written and tested against.
+version: "chart 10.9.2"

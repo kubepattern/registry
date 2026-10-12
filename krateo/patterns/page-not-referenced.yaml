@@ -7,6 +7,9 @@ metadata:
   name: page-not-referenced
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A Page that no NavMenuItem or Panel points to, so it can never be reached from the portal."
 spec:
   displayName: Page Not Referenced
   category: Architecture

@@ -4,6 +4,9 @@ metadata:
   name: argocd-applicationset-generates-nothing
   labels:
     kubepattern.dev/platform: argocd
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "An ApplicationSet whose generators match nothing, so it owns no Application. The controller reports no error."
 spec:
   displayName: ApplicationSet Generates No Applications
   category: Architecture

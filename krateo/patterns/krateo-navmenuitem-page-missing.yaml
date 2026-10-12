@@ -6,6 +6,9 @@ metadata:
   name: krateo-navmenuitem-page-missing
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: dangling
+  annotations:
+    kubepattern.dev/summary: "A sidebar entry whose Page does not exist: broken navigation in the portal."
 spec:
   displayName: NavMenuItem Page Missing
   category: Reliability

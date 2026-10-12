@@ -10,6 +10,9 @@ metadata:
   name: certmanager-clusterissuer-not-used
   labels:
     kubepattern.dev/platform: cert-manager
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A ClusterIssuer that no Certificate or CertificateRequest uses, yet still holds signing material."
 spec:
   displayName: ClusterIssuer Not Used
   category: Security

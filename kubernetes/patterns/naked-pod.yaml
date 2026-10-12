@@ -2,11 +2,16 @@ apiVersion: kubepattern.dev/v1
 kind: Pattern
 metadata:
   name: naked-pod
+  labels:
+    kubepattern.dev/platform: kubernetes
+    kubepattern.dev/family: single
+  annotations:
+    kubepattern.dev/summary: "A Pod that no controller owns, so nothing re-creates it when it fails or its node is drained."
 spec:
   displayName: "Naked Pod (Unmanaged)"
   category: "Architecture"
   severity: "MEDIUM"
-  message: "Il Pod {{target.metadata.name}} nel namespace {{target.metadata.namespace}} è un 'naked pod': non è gestito da alcun controller (es. Deployment)."
+  message: "Pod {{target.metadata.namespace}}/{{target.metadata.name}} is a naked Pod: no controller (such as a Deployment) manages it."
   
   target:
     kind: Pod
@@ -16,4 +21,3 @@ spec:
       matchAll:
         - path: "metadata.ownerReferences"
           operator: IS_EMPTY
-          values: []

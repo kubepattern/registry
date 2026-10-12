@@ -7,6 +7,9 @@ metadata:
   name: kubevela-componentdefinition-not-used
   labels:
     kubepattern.dev/platform: kubevela
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A ComponentDefinition that no Application able to resolve it uses."
 spec:
   displayName: ComponentDefinition Not Used
   category: Architecture

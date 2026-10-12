@@ -1,0 +1,6 @@
+# Shown by the Smell Map of kubepattern.dev.
+name: "KubeVela"
+role: "Application platform"
+# Version the patterns were written and tested against.
+version: "1.11.0"
+note: "The built-in variants examine the definitions that KubeVela installs in vela-system. On a stock 1.11.0 install, they flag 40 of the 45 as unused (8 of 10 ComponentDefinitions, 32 of 35 TraitDefinitions)."

@@ -7,6 +7,9 @@ metadata:
   name: krateo-restaction-endpoint-missing
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: dangling
+  annotations:
+    kubepattern.dev/summary: "A RESTAction whose endpoint Secret does not exist. Silent: the widget renders empty without an error."
 spec:
   displayName: RESTAction Endpoint Secret Missing
   category: Reliability

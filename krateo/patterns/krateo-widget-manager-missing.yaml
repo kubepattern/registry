@@ -7,6 +7,9 @@ metadata:
   name: krateo-widget-manager-missing
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: dangling
+  annotations:
+    kubepattern.dev/summary: "A Markdown, YamlViewer or RESTAction labelled as managed by a RESTAction or Table that does not exist, so nothing keeps it up to date."
 spec:
   displayName: Widget Manager Missing
   category: Architecture

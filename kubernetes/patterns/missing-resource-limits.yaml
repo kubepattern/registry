@@ -2,11 +2,16 @@ apiVersion: kubepattern.dev/v1
 kind: Pattern
 metadata:
   name: missing-resource-limits
+  labels:
+    kubepattern.dev/platform: kubernetes
+    kubepattern.dev/family: single
+  annotations:
+    kubepattern.dev/summary: "A Deployment whose containers set no resource limits, so one of them can starve the others on its node."
 spec:
   displayName: "Missing Resource Limits"
   category: "Reliability"
   severity: "HIGH"
-  message: "Il Deployment {{target.metadata.name}} nel namespace {{target.metadata.namespace}} ha container senza i limiti di risorse (limits) definiti."
+  message: "Deployment {{target.metadata.namespace}}/{{target.metadata.name}} sets no resource limits on its containers."
   
   target:
     kind: Deployment
@@ -16,4 +21,3 @@ spec:
       matchNone:
         - path: "spec.template.spec.containers[*].resources.limits"
           operator: EXISTS
-          values: []

@@ -2,11 +2,16 @@ apiVersion: kubepattern.dev/v1
 kind: Pattern
 metadata:
   name: missing-liveness-probe
+  labels:
+    kubepattern.dev/platform: kubernetes
+    kubepattern.dev/family: single
+  annotations:
+    kubepattern.dev/summary: "A Deployment whose containers define no liveness probe, so Kubernetes cannot restart the application when it hangs."
 spec:
   displayName: "Missing Liveness Probe"
   category: "Reliability"
   severity: "HIGH"
-  message: "Il Deployment {{target.metadata.name}} (ns: {{target.metadata.namespace}}) non definisce una livenessProbe. K8s non saprà quando riavviare l'app in caso di blocco."
+  message: "Deployment {{target.metadata.namespace}}/{{target.metadata.name}} defines no livenessProbe: Kubernetes cannot tell when to restart the application if it hangs."
   
   target:
     kind: Deployment
@@ -16,4 +21,3 @@ spec:
       matchNone:
         - path: "spec.template.spec.containers[*].livenessProbe"
           operator: EXISTS
-          values: []

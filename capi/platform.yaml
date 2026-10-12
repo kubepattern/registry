@@ -1,0 +1,5 @@
+# Shown by the Smell Map of kubepattern.dev.
+name: "Cluster API"
+role: "Cluster lifecycle"
+# Version the patterns were written and tested against.
+version: "1.14.2"

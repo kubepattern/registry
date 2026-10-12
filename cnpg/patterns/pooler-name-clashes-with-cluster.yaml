@@ -4,6 +4,9 @@ metadata:
   name: cnpg-pooler-name-clashes-with-cluster
   labels:
     kubepattern.dev/platform: cnpg
+    kubepattern.dev/family: misconfig
+  annotations:
+    kubepattern.dev/summary: "A Pooler that shares its name with a Cluster in the same namespace, which the Pooler API contract forbids."
 spec:
   displayName: Pooler Named Like a Cluster
   category: Misconfiguration

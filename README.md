@@ -12,7 +12,7 @@ The [KubePattern](https://kubepattern.dev) analysis tool uses these definitions 
 
 ## Registry layout
 
-Patterns are grouped by the application they analyze. Each folder holds the Patterns in `patterns/` and, where available, their documentation in `doc/`.
+Patterns are grouped by the application they analyze. Each folder holds the Patterns in `patterns/`, a `platform.yaml` that describes the application and, where available, documentation in `doc/` and test manifests in `tests/`.
 
 | Application | Patterns |
 |---|---|
@@ -29,6 +29,41 @@ Patterns are grouped by the application they analyze. Each folder holds the Patt
 | [Krateo](krateo/patterns) | `krateo-compositiondefinition-unused`, `krateo-navmenuitem-page-missing`, `krateo-restaction-endpoint-missing`, `krateo-restaction-manager-missing`, `krateo-restaction-not-used`, `krateo-rolebinding-clusterrole-missing`, `krateo-rolebinding-subject-sa-missing`, `krateo-widget-manager-missing`, `krateo-yamlviewer-apiref-dangling`, `page-not-referenced`, `panel-not-referenced`, `paragraph-not-referenced` |
 
 Some Patterns use the DSL constructs of the limitations update (element anchors `[@]`, defaults, value transforms, quoted keys, `kinds`, kind wildcards, `fromTarget`): they need a KubePattern engine built from the `dev` branch.
+
+## Metadata
+
+Every Pattern in `patterns/` carries two labels and one annotation. They play no part in detection: the [Smell Map](https://kubepattern.dev/smell-map) of the KubePattern site is built from them, so a Pattern added here appears on the map at the next deploy.
+
+```yaml
+metadata:
+  name: eso-secretstore-not-used
+  labels:
+    kubepattern.dev/platform: external-secrets   # the name of the folder
+    kubepattern.dev/family: unused                # unused | dangling | companion | misconfig | single
+  annotations:
+    kubepattern.dev/summary: "A SecretStore that no ExternalSecret or PushSecret in its namespace uses, still holding provider credentials."
+```
+
+| Family | What the Pattern reports |
+|---|---|
+| `unused` | A definition exists, but nothing refers to it. |
+| `dangling` | A resource points at something that does not exist. |
+| `companion` | A resource lacks the sibling that should accompany it. |
+| `misconfig` | A relation exists that should not. |
+| `single` | A single resource lacks a field it should have, with no relationship involved. |
+
+The summary is one sentence, in English, that says what the Pattern flags and why it matters.
+
+Each application folder has a `platform.yaml`:
+
+```yaml
+name: "External Secrets"   # display name
+role: "Secrets sync"       # what the application is, in a few words
+version: "2.11.0"          # optional: version the Patterns were written and tested against
+note: "..."                # optional: extra context shown on the map
+```
+
+The site build fails, and the site keeps its previous version, if a Pattern lacks one of these fields or its folder lacks a `platform.yaml`.
 
 ## Learn to write Pattern as Code
 Check out the official documentation: [KubePattern Documentation](https://kubepattern.dev/docs)

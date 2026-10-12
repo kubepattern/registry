@@ -6,6 +6,9 @@ metadata:
   name: krateo-restaction-manager-missing
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: dangling
+  annotations:
+    kubepattern.dev/summary: "A RESTAction labelled krateo.io/managed-by a RESTAction that does not exist: the generator that produced it is gone."
 spec:
   displayName: RESTAction Generator Missing
   category: Architecture

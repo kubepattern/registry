@@ -4,6 +4,9 @@ metadata:
   name: krateo-yamlviewer-apiref-dangling
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: dangling
+  annotations:
+    kubepattern.dev/summary: "A YamlViewer that reads its data from a RESTAction that does not exist: the portal fails to resolve the widget."
 spec:
   displayName: YamlViewer apiRef Dangling
   category: Reliability

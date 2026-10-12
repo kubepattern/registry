@@ -4,6 +4,9 @@ metadata:
   name: argocd-appproject-empty
   labels:
     kubepattern.dev/platform: argocd
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "An AppProject that grants source and destination permissions but that no Application uses."
 spec:
   displayName: AppProject Without Applications
   category: Security

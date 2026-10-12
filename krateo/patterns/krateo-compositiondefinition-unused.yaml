@@ -7,6 +7,9 @@ metadata:
   name: krateo-compositiondefinition-unused
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A blueprint with no composition of the kind it generates, still keeping a CRD and a controller running."
 spec:
   displayName: CompositionDefinition Unused
   category: Architecture

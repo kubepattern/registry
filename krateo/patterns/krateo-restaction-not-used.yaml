@@ -8,6 +8,9 @@ metadata:
   name: krateo-restaction-not-used
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A RESTAction that no widget reads through spec.apiRef and no other RESTAction calls: its API calls are defined but never rendered."
 spec:
   displayName: RESTAction Not Used
   category: Architecture

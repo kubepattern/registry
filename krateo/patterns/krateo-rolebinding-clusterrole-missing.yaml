@@ -4,6 +4,9 @@ metadata:
   name: krateo-rolebinding-clusterrole-missing
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: dangling
+  annotations:
+    kubepattern.dev/summary: "A RoleBinding to a ClusterRole that does not exist: its subjects silently get no access, and whatever a future ClusterRole grants."
 spec:
   displayName: RoleBinding to Missing ClusterRole
   category: Security

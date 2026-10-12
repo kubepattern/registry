@@ -4,6 +4,9 @@ metadata:
   name: kubevela-builtin-traitdefinition-not-used
   labels:
     kubepattern.dev/platform: kubevela
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A built-in TraitDefinition in vela-system that no Application in the cluster uses."
 spec:
   displayName: Built-in TraitDefinition Not Used
   category: Architecture

@@ -1,0 +1,6 @@
+# Shown by the Smell Map of kubepattern.dev.
+name: "Krateo"
+role: "Platform engineering portal"
+# Version the patterns were written and tested against.
+version: "3.0.2"
+note: "Krateo 3.0.x widget kinds. Newer portal releases ship a different widget set, so the widget patterns apply to that line only."

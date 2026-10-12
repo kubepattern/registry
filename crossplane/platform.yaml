@@ -1,0 +1,5 @@
+# Shown by the Smell Map of kubepattern.dev.
+name: "Crossplane"
+role: "Control plane"
+# Version the patterns were written and tested against.
+version: "2.4.2"

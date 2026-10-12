@@ -6,6 +6,9 @@ metadata:
   name: paragraph-not-referenced
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A Paragraph that no Panel, Column or Row includes, so nothing renders it."
 spec:
   displayName: Paragraph Not Referenced
   category: Architecture

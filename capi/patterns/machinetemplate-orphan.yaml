@@ -6,6 +6,9 @@ metadata:
   name: capi-machinetemplate-orphan
   labels:
     kubepattern.dev/platform: capi
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A DockerMachineTemplate that no MachineDeployment, MachineSet, control plane or ClusterClass points at, typically left behind by a template rotation."
 spec:
   displayName: Orphan DockerMachineTemplate
   category: Architecture

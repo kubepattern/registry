@@ -1,0 +1,5 @@
+# Shown by the Smell Map of kubepattern.dev.
+name: "External Secrets"
+role: "Secrets sync"
+# Version the patterns were written and tested against.
+version: "2.11.0"

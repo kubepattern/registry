@@ -6,6 +6,9 @@ metadata:
   name: crossplane-composition-without-xrd
   labels:
     kubepattern.dev/platform: crossplane
+    kubepattern.dev/family: dangling
+  annotations:
+    kubepattern.dev/summary: "A Composition for a composite kind that no CompositeResourceDefinition defines: it can never be selected, and Crossplane does not say so."
 spec:
   displayName: Composition Targets an Undefined Composite Kind
   category: Architecture

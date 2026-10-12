@@ -6,6 +6,9 @@ metadata:
   name: cnpg-cluster-without-scheduledbackup
   labels:
     kubepattern.dev/platform: cnpg
+    kubepattern.dev/family: companion
+  annotations:
+    kubepattern.dev/summary: "A PostgreSQL Cluster with no ScheduledBackup in its namespace, so nothing backs it up on a schedule."
 spec:
   displayName: PostgreSQL Cluster Without Scheduled Backup
   category: Reliability

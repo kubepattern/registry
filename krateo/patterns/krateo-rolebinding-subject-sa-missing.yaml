@@ -7,6 +7,9 @@ metadata:
   name: krateo-rolebinding-subject-sa-missing
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: dangling
+  annotations:
+    kubepattern.dev/summary: "A RoleBinding that grants a Role to a ServiceAccount that does not exist, such as an agent that was never deployed."
 spec:
   displayName: RoleBinding to Missing ServiceAccount
   category: Security

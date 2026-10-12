@@ -8,6 +8,9 @@ metadata:
   name: panel-not-referenced
   labels:
     kubepattern.dev/platform: krateo
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A Panel that is not part of any layout (Row, Column, TabList, Page, DataGrid or another Panel)."
 spec:
   displayName: Panel Not Referenced
   category: Architecture

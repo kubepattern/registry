@@ -4,6 +4,9 @@ metadata:
   name: crossplane-function-not-used
   labels:
     kubepattern.dev/platform: crossplane
+    kubepattern.dev/family: unused
+  annotations:
+    kubepattern.dev/summary: "A Function that runs a Pod but is not referenced by any Composition or Operation pipeline step."
 spec:
   displayName: Crossplane Function Not Used
   category: Cost
