@@ -1,3 +1,7 @@
+---
+name: create-kubepattern-pattern
+description: Write a new KubePattern Pattern (kubepattern.dev/v1) with the Pattern DSL. Use when the user asks to create, draft or modify a Pattern given the problem that it needs to address.
+---
 # KubePattern Pattern authoring guide for AI assistants
 
 **For people.** Give this file to an AI chatbot (upload it, or paste it as the first message), then describe the problem: the smell to detect, or the correct behaviour whose violation you want to find. The assistant answers with a KubePattern `Pattern` ready to `kubectl apply`, explains what it flags, and lists the Kubernetes and CRD versions it assumed, so an architect can check that the result matches the current APIs. If the engine rejects the Pattern, paste the linter error back into the chat: the assistant fixes it.
