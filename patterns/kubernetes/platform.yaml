@@ -1,4 +1,4 @@
 # Shown by the Smell Map of kubepattern.dev.
 name: "Kubernetes"
 role: "Core workloads"
-note: "Checks on a single resource, with no relationship. They are kept here as simple examples of the Pattern format."
+note: "Checks on core Kubernetes resources, kept here as simple examples of the Pattern format."

@@ -1,0 +1,217 @@
+# Test manifests for patterns/kubernetes/patterns/service-selects-no-pod.yaml.
+#
+#   kubectl apply -f patterns/kubernetes/patterns/service-selects-no-pod.yaml
+#   kubectl apply -f patterns/kubernetes/tests/service-selects-no-pod.yaml
+#
+# Expected Smells (Pending for the spec.for of 15m, then Active):
+#   kp-svc-a/ghost         selects app=ghost: no Pod has that label
+#   kp-svc-a/cross-ns      the only Pod with app=only-in-b runs in kp-svc-b
+#   kp-svc-a/partial       selects app=web,tier=back: the web Pod has tier=front
+# No Smell:
+#   kp-svc-a/web           the web Pod has the selected label, and more
+#   kp-svc-a/api           selects the Pods of a Deployment
+#   kp-svc-a/manual        no selector (endpoints managed by hand): filtered out
+#   kp-svc-a/external      ExternalName, no selector: filtered out
+#   kube-system/kp-ghost   dangling selector, but kube-system is filtered out
+#   kp-svc-b/only-in-b     selects the Pod of its own namespace
+#   kp-svc-a/not-ready     its only Pod never starts: the Pattern checks that a Pod is
+#                          selected, not that it is ready, so it is not flagged
+#
+# Fixing kp-svc-a/ghost (a Pod with app=ghost) removes its Smell at the next run;
+# deleting the web Pod flags kp-svc-a/web.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kp-svc-a
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kp-svc-b
+---
+# Smell: no Pod has app=ghost.
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghost
+  namespace: kp-svc-a
+spec:
+  selector:
+    app: ghost
+  ports:
+    - port: 80
+---
+# Smell: the Pod with app=only-in-b lives in another namespace.
+apiVersion: v1
+kind: Service
+metadata:
+  name: cross-ns
+  namespace: kp-svc-a
+spec:
+  selector:
+    app: only-in-b
+  ports:
+    - port: 80
+---
+# Smell: every label of the selector must match, and the web Pod has tier=front.
+apiVersion: v1
+kind: Service
+metadata:
+  name: partial
+  namespace: kp-svc-a
+spec:
+  selector:
+    app: web
+    tier: back
+  ports:
+    - port: 80
+---
+# No Smell: selects the web Pod, which has an extra label.
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: kp-svc-a
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web
+  namespace: kp-svc-a
+  labels:
+    app: web
+    tier: front
+spec:
+  containers:
+    - name: pause
+      image: registry.k8s.io/pause:3.10.1
+---
+# No Smell: selects the Pods of a Deployment.
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: kp-svc-a
+spec:
+  selector:
+    app: api
+  ports:
+    - port: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: kp-svc-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause:3.10.1
+---
+# No Smell: a Service without a selector, whose endpoints are managed by hand.
+apiVersion: v1
+kind: Service
+metadata:
+  name: manual
+  namespace: kp-svc-a
+spec:
+  ports:
+    - port: 80
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: manual-1
+  namespace: kp-svc-a
+  labels:
+    kubernetes.io/service-name: manual
+addressType: IPv4
+endpoints:
+  - addresses: ["192.0.2.10"]
+ports:
+  - port: 80
+---
+# No Smell: an ExternalName Service has no selector.
+apiVersion: v1
+kind: Service
+metadata:
+  name: external
+  namespace: kp-svc-a
+spec:
+  type: ExternalName
+  externalName: example.com
+---
+# No Smell: the selector dangles, but the Pattern skips kube-system.
+apiVersion: v1
+kind: Service
+metadata:
+  name: kp-ghost
+  namespace: kube-system
+spec:
+  selector:
+    app: kp-ghost
+  ports:
+    - port: 80
+---
+# No Smell: selects the Pod of its own namespace.
+apiVersion: v1
+kind: Service
+metadata:
+  name: only-in-b
+  namespace: kp-svc-b
+spec:
+  selector:
+    app: only-in-b
+  ports:
+    - port: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: only-in-b
+  namespace: kp-svc-b
+  labels:
+    app: only-in-b
+spec:
+  containers:
+    - name: pause
+      image: registry.k8s.io/pause:3.10.1
+---
+# No Smell, by design: the selected Pod exists but never becomes ready (its image
+# cannot be pulled), so the Service has no ready endpoint.
+apiVersion: v1
+kind: Service
+metadata:
+  name: not-ready
+  namespace: kp-svc-a
+spec:
+  selector:
+    app: not-ready
+  ports:
+    - port: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: not-ready
+  namespace: kp-svc-a
+  labels:
+    app: not-ready
+spec:
+  containers:
+    - name: never
+      image: registry.invalid/kubepattern/never:0

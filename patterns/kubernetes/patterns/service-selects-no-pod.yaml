@@ -1,0 +1,41 @@
+apiVersion: kubepattern.dev/v1
+kind: Pattern
+metadata:
+  name: service-selects-no-pod
+  labels:
+    kubepattern.dev/platform: kubernetes
+    kubepattern.dev/family: dangling
+  annotations:
+    kubepattern.dev/summary: "A Service whose label selector matches no Pod in its namespace, so traffic sent to the Service has no backend endpoints."
+spec:
+  displayName: Service Selects No Pod
+  category: Reliability
+  severity: HIGH
+  message: "Service {{target.metadata.namespace}}/{{target.metadata.name}} has a label selector that matches no Pod in its namespace: traffic to this Service goes nowhere."
+  reference: "https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service"
+  for: 15m
+  target:
+    kind: Service
+    apiVersion: v1
+    plural: services
+    filters:
+      matchNone:
+        - path: "spec.selector"
+          operator: IS_EMPTY
+        - path: "metadata.namespace"
+          operator: EQUALS
+          values: ["kube-system"]
+  dependencies:
+    - id: pod
+      kind: Pod
+      apiVersion: v1
+      plural: pods
+  relationships:
+    matchNone:
+      - with: pod
+        type: selects
+        selectorPath: "spec.selector"
+        criteria:
+          - targetPath: "metadata.namespace"
+            dependencyPath: "metadata.namespace"
+            operator: EQUALS

@@ -16,7 +16,7 @@ Patterns are grouped by the application they analyze. Each folder holds the Patt
 
 | Application | Patterns |
 |---|---|
-| [Kubernetes](kubernetes/patterns) | `missing-liveness-probe`, `missing-resource-limits`, `naked-pod` |
+| [Kubernetes](kubernetes/patterns) | `missing-liveness-probe`, `missing-resource-limits`, `naked-pod`, `service-selects-no-pod` |
 | [Argo CD](argocd/patterns) | `argocd-applicationset-generates-nothing`, `argocd-appproject-empty` |
 | [Cluster API](capi/patterns) | `capi-machinetemplate-orphan` |
 | [cert-manager](cert-manager/patterns) | `certmanager-clusterissuer-not-used` |
@@ -28,7 +28,7 @@ Patterns are grouped by the application they analyze. Each folder holds the Patt
 | [KubeVela](kubevela/patterns) | `kubevela-componentdefinition-not-used`, `kubevela-traitdefinition-not-used`, `kubevela-builtin-componentdefinition-not-used`, `kubevela-builtin-traitdefinition-not-used` |
 | [Krateo](krateo/patterns) | `krateo-compositiondefinition-unused`, `krateo-navmenuitem-page-missing`, `krateo-restaction-endpoint-missing`, `krateo-restaction-manager-missing`, `krateo-restaction-not-used`, `krateo-rolebinding-clusterrole-missing`, `krateo-rolebinding-subject-sa-missing`, `krateo-widget-manager-missing`, `krateo-yamlviewer-apiref-dangling`, `page-not-referenced`, `panel-not-referenced`, `paragraph-not-referenced` |
 
-Some Patterns use the DSL constructs of the limitations update (element anchors `[@]`, defaults, value transforms, quoted keys, `kinds`, kind wildcards, `fromTarget`): they need a KubePattern engine built from the `dev` branch.
+Some Patterns use the DSL constructs of the limitations update (element anchors `[@]`, defaults, value transforms, quoted keys, `kinds`, kind wildcards, `fromTarget`, criteria on `selects`/`selectedBy`) or `spec.for`: they need a KubePattern engine built from the `dev` branch.
 
 ## Metadata
 
